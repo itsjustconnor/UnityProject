@@ -15,7 +15,7 @@ public class player : MonoBehaviour {
 
 	private float invulnerableEndTime = 0;
 	private float blinkEndTime = 0;
-	private float hasDoubleJumped = false;
+	private bool hasDoubleJumped = false;
 
 
 	// Use this for initialization
@@ -49,7 +49,7 @@ public class player : MonoBehaviour {
 		}
 
 		//normally only allows the jump if touching the ground
-		bool allowedToJump = isTouchingGround
+		bool allowedToJump = isTouchingGround;
 
 			if (isTouchingGround == false && hasDoubleJumped == false)
 				allowedToJump = true;
