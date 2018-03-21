@@ -6,6 +6,7 @@ public class player : MonoBehaviour {
 
 
 	public float speed =5;
+	public float jumpspeed =10;
 	public float health = 100;
 	public float invulnerableDuration = 1;
 	public float blinkDuration = 0.25f;
@@ -27,6 +28,13 @@ public class player : MonoBehaviour {
 
 		//set our velocity based on the input and our speed value
 		velocity.x = horizontal * speed;
+
+		//jump logic
+		bool jumpPressed = Input.GetButtonDown("Jump");
+
+		if (jumpPressed == true) {
+			velocity.y = jumpspeed;
+		}
 
 		//put this velocity back into the physics system
 		ourRigidBody.velocity = velocity;
@@ -54,8 +62,15 @@ public class player : MonoBehaviour {
 				blinkEndTime = Time.time + blinkDuration;
 			} // end if (Time.time >= blinkEndTime)  
 		} // end if (Time.time >= invulnerableEndTime)  
+
+		//mouse tests
+		//check if left mouse button has been pressed down This Frame
+		//if (Input.GetMouseButtonDown (0) == true) {
+			//Debug.Log ("Mouse left button has been pressed down");
+			//Debug.Log ("mouse postion = " + Input.mousePosition);
+				
 	} // end Update()  
-	
+			
 	//reducing health by the damage passed in
 	public void Damage(float damageToDeal)
 	{
