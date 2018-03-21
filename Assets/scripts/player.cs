@@ -11,8 +11,12 @@ public class player : MonoBehaviour {
 	public float invulnerableDuration = 1;
 	public float blinkDuration = 0.25f;
 
+
+
 	private float invulnerableEndTime = 0;
 	private float blinkEndTime = 0;
+	private float hasDoubleJumped = false;
+
 
 	// Use this for initialization
 	void Start () {
@@ -29,11 +33,36 @@ public class player : MonoBehaviour {
 		//set our velocity based on the input and our speed value
 		velocity.x = horizontal * speed;
 
+		//determine if touching ground
+		//get the collider attached to this object
+		Collider2D ourCollider = GetComponent<Collider2D>();
+
+		//get the layermask of the ground layer - we need this for the next function call
+		LayerMask groundlayer = LayerMask.GetMask("Ground");
+
+		//ask the Collider if we are touching this layer
+		bool isTouchingGround = ourCollider.IsTouchingLayers(groundlayer);
+
+		//if we are touching the ground we need to reset the double jump
+		if (isTouchingGround == true) {
+			hasDoubleJumped = false;
+		}
+
+		//normally only allows the jump if touching the ground
+		bool allowedToJump = isTouchingGround
+
+			if (isTouchingGround == false && hasDoubleJumped == false)
+				allowedToJump = true;
+
 		//jump logic
 		bool jumpPressed = Input.GetButtonDown("Jump");
 
-		if (jumpPressed == true) {
+
+		//only jump if we have both pressed the button AND are Allowed to jump
+		if (jumpPressed == true && allowedToJump == true) {
 			velocity.y = jumpspeed;
+			if (isTouchingGround == false)
+				hasDoubleJumped = true;
 		}
 
 		//put this velocity back into the physics system
